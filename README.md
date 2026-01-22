@@ -10,18 +10,15 @@ HTML
 CSS
 JavaScript
 
-Backend & Database:
-PHP (via XAMPP)
-MySQL
+Backend:
 Development Tools:
 Visual Studio Code (VS Code)
-XAMPP Server
+
 
 ⚙️ Features
 User-friendly web interface
 Career-related data storage using MySQL
 Dynamic interaction using JavaScript
-Backend connectivity using XAMPP (Apache & MySQL)
 Modular and easy-to-understand project structure
 
 🎯 Purpose of the Project
