@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Career Path Suggestion</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: #f4f7fb;
+    color: #2c2c2c;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Side Navigation */
+  .side-nav {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100%;
+    background: #2b4c7e;
+    color: white;
+    padding: 80px 20px 30px;
+    transition: left 0.3s ease;
+    z-index: 999;
+    box-shadow: 3px 0 15px rgba(0,0,0,0.2);
+    overflow-y: auto;
+  }
+  
+  .side-nav.active {
+    left: 0;
+  }
+  
+  .side-nav h3 {
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    font-size: 1.4rem;
+  }
+  
+  .side-nav ul {
+    list-style: none;
+  }
+  
+  .side-nav li {
+    margin-bottom: 15px;
+  }
+  
+  .side-nav a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: background 0.3s;
+    font-weight: 600;
+  }
+  
+  .side-nav a:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  
+  .side-nav .icon {
+    margin-right: 10px;
+    font-size: 1.2rem;
+    vertical-align: middle;
+  }
+  
+  .hamburger {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background: #2b4c7e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 998;
+    display: none;
+  }
+  
+  .overlay.active {
+    display: block;
+  }
+
+  /* Header */
+  header {
+    background: #ffffff;
+    border-bottom: 2px solid #e0e0e0;
+    padding: 14px 40px 14px 90px;
+    color: #333;
+    font-weight: 700;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+  }
+  header img { height: 36px; width: 36px; }
+  nav a {
+    margin-left: 22px; text-decoration: none; color: #333; font-weight: 600;
+    transition: color 0.3s;
+  }
+  nav a:hover { color: #2b4c7e; }
+
+  /* Hero */
+  .hero {
+  text-align: center;
+  padding: 70px 20px 40px;
+  background: linear-gradient(135deg, #2b4c7e, #4a90e2);
+  color: white;
+  border-radius: 0 0 40px 40px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  min-height: 24px; /* reserve space for typing */
+}
+
+.hero button {
+  background: #fff;
+  color: #000000;
+  font-weight: 700;
+  border: none;
+  padding: 12px 28px;
+  font-size: 1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.hero button:hover {
+  background: #f4f7fb;
+  transform: translateY(-3px);
+}
+
+
+  /* Container */
+  main {
+    flex: 1;
+    max-width: 900px;
+    margin: 20px auto 60px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 40px 30px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  }
+  h1 { text-align: center; font-weight: 700; margin-bottom: 25px; color: #ffffff; }
+
+  /* Steps */
+  .steps { display: flex; justify-content: space-between; margin-bottom: 30px; }
+  .step {
+    flex: 1; text-align: center; font-weight: 600; font-size: 0.9rem;
+    color: #aaa; position: relative;
+  }
+  .step.active, .step.completed { color: #2b4c7e; }
+  .step::after {
+    content: ''; position: absolute; top: 50%; right: -50%; transform: translateY(-50%);
+    width: 100%; height: 3px; background: #e0e0e0;
+  }
+  .step:last-child::after { display: none; }
+  .step.completed::after { background: #2b4c7e; }
+
+  /* Form */
+  form { position: relative; min-height: 260px; }
+  .form-step { display: none; flex-direction: column; gap: 18px; }
+  .form-step.active { display: flex; }
+
+  label { font-weight: 600; color: #444; }
+  select, input[type="range"] {
+    width: 100%; padding: 12px 14px; font-size: 1rem;
+    border-radius: 10px; border: 2px solid #ddd; background: #f9f9f9;
+    transition: border 0.3s ease;
+  }
+  select:focus, input[type="range"]:focus {
+    border-color: #2b4c7e; background: #fff; outline: none;
+  }
+  input[type="range"] { -webkit-appearance: none; height: 12px; background: #eee; }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 22px; height: 22px; background: #2b4c7e;
+    border-radius: 50%; border: 3px solid #fff;
+  }
+
+  /* Language Section */
+  /* Language Section */
+.languages-fullscreen {
+  min-height: auto;   /* remove full screen height */
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.lang-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* smaller cards */
+  gap: 20px;
+  max-width: 900px;
+  width: 100%;
+}
+
+.lang-card {
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px 10px;   /* reduced padding */
+  text-align: center;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  cursor: pointer;
+}
+
+.lang-card:hover {
+  transform: translateY(-5px) scale(1.03);
+  border-color: #2b4c7e;
+  box-shadow: 0 8px 18px rgba(43, 76, 126, 0.2);
+}
+
+.lang-card img {
+  width: 45px;   /* smaller icons */
+  height: 45px;
+  margin-bottom: 10px;
+  object-fit: contain;
+}
+
+.lang-card span {
+  display: block;
+  font-size: 1rem;   /* smaller text */
+  font-weight: 600;
+  color: #2c2c2c;
+}
+
+
+
+  /* Buttons */
+  .buttons { display: flex; justify-content: space-between; margin-top: 30px; }
+  button {
+    background: #2b4c7e; border: none; color: white; font-weight: 600; font-size: 1rem;
+    padding: 12px 24px; border-radius: 10px; cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  button:disabled { background: #9cb3d5; cursor: not-allowed; }
+  button:hover:not(:disabled) { background: #1f355a; }
+
+  /* Results */
+  #result {
+    margin-top: 35px;
+    padding: 25px;
+    background: #f4f8ff;
+    border-left: 6px solid #2b4c7e;
+    border-radius: 10px;
+  }
+  
+  .job-card {
+    background: white;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  
+  .job-card img {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+  }
+  
+  .job-info h4 {
+    margin-bottom: 6px;
+    color: #2b4c7e;
+  }
+
+  /* Footer */
+  footer {
+    background: #ffffff;
+    border-top: 2px solid #e0e0e0;
+    color: #555;
+    padding: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: auto;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    header {
+      padding: 14px 20px 14px 70px;
+    }
+    
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    nav a {
+      margin-left: 0;
+    }
+    
+    .lang-grid {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+    
+    .hamburger {
+      top: 15px;
+      left: 15px;
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+    }
+  }
+  .platforms {
+  padding: 60px 20px;
+  background: #f9fafc;
+  text-align: center;
+}
+
+.platforms h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #2b4c7e;
+  font-weight: 700;
+}
+
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.platform-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 30px 20px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.platform-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(43, 76, 126, 0.2);
+}
+
+.platform-card img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+
+.platform-card h3 {
+  font-size: 1.2rem;
+  color: #2c2c2c;
+  margin-bottom: 10px;
+}
+
+.platform-card p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.platform-card a {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 20px;
+  background: #2b4c7e;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.platform-card a:hover {
+  background: #1e365d;
+}
+.platforms {
+  padding: 60px 20px;
+  background: #f9fafc;
+  text-align: center;
+}
+
+.platforms h2 {
+  font-size: 2rem;
+  margin-bottom: 24px;
+  color: #2b4c7e;
+  font-weight: 700;
+}
+
+.platform-filters {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.pf-btn {
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: 2px solid #2b4c7e;
+  background: #fff;
+  color: #2b4c7e;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+.pf-btn.active, .pf-btn:hover { background: #2b4c7e; color: #fff; }
+
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.platform-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px 20px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.platform-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(43, 76, 126, 0.2);
+}
+
+.platform-card img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.platform-card h3 {
+  font-size: 1.1rem;
+  color: #2c2c2c;
+  margin-bottom: 8px;
+}
+
+.platform-card p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 14px;
+  min-height: 42px; /* keeps cards equal height */
+}
+
+.platform-card a {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 20px;
+  background: #2b4c7e;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background 0.2s ease;
+}
+.platform-card a:hover { background: #1e365d; }
+/* Career Suggester Section */
+#careerSuggester {
+  background: linear-gradient(135deg, #f7f9fc, #eef3f8);
+  border-radius: 18px;
+  padding: 40px 30px;
+  max-width: 950px;
+  margin: 60px auto;
+  box-shadow: 0 6px 22px rgba(0,0,0,0.1);
+}
+
+#careerSuggester h1 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2b4c7e;
+  margin-bottom: 25px;
+}
+
+/* Form */
+.career-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 25px;
+}
+
+.career-form label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.career-form select {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 2px solid #d9e2ec;
+  font-size: 0.95rem;
+  transition: 0.3s;
+  background: #fff;
+}
+
+.career-form select:focus {
+  border-color: #2b4c7e;
+  box-shadow: 0 0 6px rgba(43, 76, 126, 0.25);
+  outline: none;
+}
+
+/* Button */
+.career-form button {
+  grid-column: span 2;
+  padding: 14px;
+  background: #2b4c7e;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.career-form button:hover {
+  background: #1f325c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(43, 76, 126, 0.25);
+}
+
+/* Results */
+#careerResult h3 {
+  color: #2b4c7e;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.job-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.job-card p strong {
+  color: #2b4c7e;
+}
+
+.job-card p {
+  margin: 6px 0;
+}
+
+
+.job-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.15);
+}
+
+.job-card img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.job-card h4 {
+  font-size: 1.2rem;
+  color: #2b4c7e;
+  margin-bottom: 6px;
+}
+
+.job-card p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+
+
+</style>
+</head>
+<body>
+
+<!-- Side Navigation -->
+<button class="hamburger">☰</button>
+<div class="overlay"></div>
+
+<aside class="side-nav">
+  <h3>CareerPath</h3>
+  <ul>
+    <li><a href="#"><span class="icon">🏠</span> Home</a></li>
+    <li><a href="#"><span class="icon">🚀</span> Career Quiz</a></li>
+    <li><a href="#"><span class="icon">💼</span> Job Matches</a></li>
+    <li><a href="#"><span class="icon">📊</span> Skills Assessment</a></li>
+    <li><a href="#"><span class="icon">🎓</span> Learning Paths</a></li>
+    <li><a href="#"><span class="icon">📝</span> Resume Builder</a></li>
+    <li><a href="#"><span class="icon">🤝</span> Mentorship</a></li>
+    <li><a href="#"><span class="icon">💰</span> Salary Insights</a></li>
+    <li><a href="#"><span class="icon">🔔</span> Job Alerts</a></li>
+    <li><a href="#"><span class="icon">📚</span> Resources</a></li>
+    <li><a href="#"><span class="icon">👤</span> Profile</a></li>
+    <li><a href="#"><span class="icon">⚙️</span> Settings</a></li>
+  </ul>
+</aside>
+
+<header>
+  <div class="logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="Logo" />
+    CareerPath
+  </div>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Skills</a>
+    <a href="#">Careers</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <h1>Build Skills That Land Jobs 🚀</h1>
+  <p id="typingText"></p>
+  <button onclick="document.getElementById('languagesSection').scrollIntoView({behavior: 'smooth'})">
+    Explore Languages
+  </button>
+</div>
+<section class="platforms">
+  <h2>Free Platforms to Build Skills & Earn Certifications 🎓</h2>
+
+  <!-- Optional: Filters -->
+  <div class="platform-filters">
+    <button class="pf-btn active" data-filter="all">All</button>
+    <button class="pf-btn" data-filter="corporate">Corporate</button>
+    <button class="pf-btn" data-filter="university">University</button>
+    <button class="pf-btn" data-filter="community">Community</button>
+    <button class="pf-btn" data-filter="practice">Practice/Projects</button>
+  </div>
+
+  <div class="platform-grid">
+    <!-- freeCodeCamp (community) -->
+    <div class="platform-card" data-category="community practice">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111501.png" alt="freeCodeCamp">
+      <h3>freeCodeCamp</h3>
+      <p>Free certifications in Web Dev, Data Science, ML.</p>
+      <a href="https://www.freecodecamp.org/" target="_blank">Visit →</a>
+    </div>
+
+    <!-- Coursera (university) -->
+    <div class="platform-card" data-category="university">
+      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968199.png" alt="Coursera">
+      <h3>Coursera</h3>
+      <p>University courses. Free audit + financial aid.</p>
+      <a href="https://www.coursera.org/" target="_blank">Visit →</a>
+    </div>
+
+    <!-- edX (university) -->
+    <div class="platform-card" data-category="university">
+      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968332.png" alt="edX">
+      <h3>edX</h3>
+      <p>Harvard/MIT courses (audit free, paid certificate).</p>
+      <a href="https://www.edx.org/" target="_blank">Visit →</a>
+    </div>
+
+    
+
+    <!-- Kaggle (practice) -->
+    <div class="platform-card" data-category="practice community">
+      <img src="https://cdn.iconscout.com/icon/free/png-256/free-kaggle-3628999-3030176.png" alt="Kaggle">
+      <h3>Kaggle</h3>
+      <p>Micro-courses + hands-on projects for DS/ML.</p>
+      <a href="https://www.kaggle.com/learn" target="_blank">Visit →</a>
+    </div>
+
+    <!-- Infosys Springboard (corporate) -->
+    <div class="platform-card" data-category="corporate">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Infosys_logo.svg" alt="Infosys Springboard">
+      <h3>Infosys Springboard</h3>
+      <p>Free courses in AI, Cloud, Programming, soft skills.</p>
+      <a href="https://infyspringboard.onwingspan.com/web/en/page/home" target="_blank">Visit →</a>
+    </div>
+
+    <!-- IBM SkillsBuild (corporate) -->
+    <div class="platform-card" data-category="corporate">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM SkillsBuild">
+      <h3>IBM SkillsBuild</h3>
+      <p>Free tracks in Data, AI, Cybersecurity, Cloud.</p>
+      <a href="https://skillsbuild.org/" target="_blank">Visit →</a>
+    </div>
+
+    <!-- Forage (practice) -->
+    <div class="platform-card" data-category="practice corporate">
+      <img src="https://yt3.googleusercontent.com/ytc/AIdro_nOZ5loM8xDdfB2hy7fOxSK6WAvmF_Mw7oZzEQd4xRjJg=s900-c-k-c0x00ffffff-no-rj" alt="Forage">
+      <h3>Forage</h3>
+      <p>Virtual experience programs from top companies.</p>
+      <a href="https://www.theforage.com/" target="_blank">Visit →</a>
+    </div>
+
+    <!-- GeeksforGeeks (community) -->
+    <div class="platform-card" data-category="community practice">
+      <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221210183344/gfglogo.png" alt="GeeksforGeeks">
+      <h3>GeeksforGeeks</h3>
+      <p>DSA tutorials, practice, articles, paid courses too.</p>
+      <a href="https://www.geeksforgeeks.org/" target="_blank">Visit →</a>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<main id="languagesSection">
+  <h1>Top Programming Languages for Career Growth 💻</h1>
+
+  <div class="languages-fullscreen">
+    <div class="lang-grid">
+      <div class="lang-card">
+        <div class="card-content">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Python">
+          <span>Python</span>
+        </div>
+      </div>
+      <div class="lang-card">
+        <div class="card-content">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968292.png" alt="JavaScript">
+          <span>JavaScript</span>
+        </div>
+      </div>
+      <div class="lang-card">
+        <div class="card-content">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968381.png" alt="TypeScript">
+          <span>TypeScript</span>
+        </div>
+      </div>
+      <div class="lang-card">
+        <div class="card-content">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968282.png" alt="Java">
+          <span>Java</span>
+        </div>
+      </div>
+      <div class="lang-card">
+        <div class="card-content">
+          <img src="https://cdn-icons-png.flaticon.com/512/6132/6132222.png" alt="C++">
+          <span>C++</span>
+        </div>
+      </div>
+      <div class="lang-card">
+        <div class="card-content">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968358.png" alt="Swift">
+          <span>Swift</span>
+        </div>
+      </div>
+      <div class="lang-card">
+        <div class="card-content">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968872.png" alt="Kotlin">
+          <span>Kotlin</span>
+        </div>
+      </div>
+      <div class="lang-card">
+        <div class="card-content">
+          <img src="https://cdn-icons-png.flaticon.com/512/2772/2772128.png" alt="SQL">
+          <span>SQL</span>
+        </div>
+      </div>
+      <div class="lang-card">
+        <div class="card-content">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968282.png" alt="R">
+          <span>R</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<section id="careerSuggester" style="margin-top:60px;">
+  <h1>Career Path Suggester 🎯</h1>
+  
+  <form id="careerForm" class="career-form">
+    <label for="stage">Your Education Stage:</label>
+    <select id="stage">
+      <option value="">-- Select --</option>
+      <option value="btech">B.Tech (During)</option>
+      <option value="after">After B.Tech</option>
+    </select>
+
+    <label for="branch">Branch / Specialization:</label>
+    <select id="branch">
+      <option value="">-- Select --</option>
+      <option value="cse">Computer Science</option>
+      <option value="it">Information Technology</option>
+      <option value="ece">Electronics</option>
+      <option value="eee">Electrical</option>
+      <option value="mech">Mechanical</option>
+      <option value="civil">Civil</option>
+    </select>
+
+    <label for="skills">Skills / Interests:</label>
+    <select id="skills">
+      <option value="">-- Select --</option>
+      <option value="web">Web Development</option>
+      <option value="ml">Machine Learning / AI</option>
+      <option value="data">Data Science / Analytics</option>
+      <option value="cloud">Cloud / DevOps</option>
+      <option value="cyber">Cybersecurity</option>
+      <option value="core">Core Engineering Jobs</option>
+    </select>
+
+    <button type="button" onclick="suggestCareer()">Get Suggestions</button>
+  </form>
+
+  <div id="careerResult" style="margin-top:25px;"></div>
+</section>
+
+
+<footer>
+  CareerPath - Helping you choose the right career path based on your skills and interests.
+</footer>
+
+<script>
+  const steps = [...document.querySelectorAll('.form-step')];
+  const stepIndicators = [...document.querySelectorAll('.step')];
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const resultDiv = document.getElementById('result');
+  const langTabs = document.querySelectorAll('.lang-tab');
+  const langCards = document.querySelectorAll('.lang-card');
+  const selectedLangsList = document.getElementById('selectedLangsList');
+  const hamburger = document.querySelector('.hamburger');
+  const sideNav = document.querySelector('.side-nav');
+  const overlay = document.querySelector('.overlay');
+  let currentStep = 0;
+  let selectedLanguages = [];
+
+  // Side navigation functionality
+  hamburger.addEventListener('click', () => {
+    sideNav.classList.toggle('active');
+    overlay.classList.toggle('active');
+  });
+
+  overlay.addEventListener('click', () => {
+    sideNav.classList.remove('active');
+    overlay.classList.remove('active');
+  });
+
+  // Language filtering functionality
+  langTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Update active tab
+      langTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      
+      const category = tab.getAttribute('data-category');
+      
+      // Show/hide languages based on category
+      langCards.forEach(card => {
+        if (category === 'all') {
+          card.style.display = 'block';
+        } else {
+          const categories = card.getAttribute('data-categories').split(',');
+          card.style.display = categories.includes(category) ? 'block' : 'none';
+        }
+      });
+    });
+  });
+  const typingText = document.getElementById("typingText");
+const phrases = ["Web Development 💻", "Mobile Apps 📱", "Data Science 📊", "AI & Machine Learning 🤖", "System Programming ⚙️"];
+let i = 0, j = 0, currentPhrase = [], isDeleting = false;
+
+function loop() {
+  typingText.innerHTML = currentPhrase.join("");
+
+  if (i < phrases.length) {
+    if (!isDeleting && j <= phrases[i].length) {
+      currentPhrase.push(phrases[i][j]);
+      j++;
+    }
+
+    if (isDeleting && j <= phrases[i].length) {
+      currentPhrase.pop();
+      j--;
+    }
+
+    if (j === phrases[i].length) {
+      isDeleting = true;
+      setTimeout(loop, 1200);
+      return;
+    }
+
+    if (isDeleting && j === 0) {
+      currentPhrase = [];
+      isDeleting = false;
+      i++;
+      if (i === phrases.length) i = 0;
+    }
+  }
+  setTimeout(loop, isDeleting ? 60 : 120);
+}
+loop();
+
+
+  // Language selection functionality
+  langCards.forEach(card => {
+    const checkbox = card.querySelector('input[type="checkbox"]');
+    
+    checkbox.addEventListener('change', () => {
+      if (checkbox.checked) {
+        selectedLanguages.push(checkbox.value);
+      } else {
+        selectedLanguages = selectedLanguages.filter(lang => lang !== checkbox.value);
+      }
+      
+      updateSelectedLanguagesList();
+    });
+  });
+
+  function updateSelectedLanguagesList() {
+    selectedLangsList.innerHTML = '';
+    
+    if (selectedLanguages.length === 0) {
+      selectedLangsList.innerHTML = '<p>No languages selected yet</p>';
+      return;
+    }
+    
+    selectedLanguages.forEach(lang => {
+      const langElement = document.createElement('div');
+      langElement.className = 'selected-lang';
+      langElement.innerHTML = `
+        ${lang}
+        <span class="remove-lang" data-lang="${lang}">×</span>
+      `;
+      selectedLangsList.appendChild(langElement);
+    });
+    
+    // Add event listeners to remove buttons
+    document.querySelectorAll('.remove-lang').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const langToRemove = e.target.getAttribute('data-lang');
+        selectedLanguages = selectedLanguages.filter(lang => lang !== langToRemove);
+        
+        // Uncheck the corresponding checkbox
+        const checkbox = document.querySelector(`.lang-card input[value="${langToRemove}"]`);
+        if (checkbox) checkbox.checked = false;
+        
+        updateSelectedLanguagesList();
+      });
+    });
+  }
+
+  function updateFormSteps() {
+    steps.forEach((step, idx) => {
+      step.classList.toggle('active', idx === currentStep);
+      stepIndicators[idx].classList.toggle('active', idx === currentStep);
+      stepIndicators[idx].classList.toggle('completed', idx < currentStep);
+    });
+    prevBtn.disabled = currentStep === 0;
+    nextBtn.textContent = currentStep === steps.length - 1 ? 'Submit' : 'Next';
+    resultDiv.style.display = 'none';
+  }
+
+  nextBtn.addEventListener('click', () => {
+    if (currentStep < steps.length - 1) {
+      currentStep++;
+      updateFormSteps();
+    } else {
+      showResults();
+    }
+  });
+  function suggestCareer() {
+  const stage = document.getElementById('stage').value;
+  const branch = document.getElementById('branch').value;
+  const skills = document.getElementById('skills').value;
+  const resultDiv = document.getElementById('careerResult');
+
+  let suggestions = "";
+
+  if (!stage || !branch || !skills) {
+    resultDiv.innerHTML = "<p style='color:red'>⚠️ Please select all fields!</p>";
+    return;
+  }
+
+  // Logic for suggestions
+  if (branch === "cse" || branch === "it") {
+    if (skills === "web") {
+      suggestions = `
+        <div class="job-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/919/919830.png"/>
+          <div><h4>Full-Stack Developer</h4>
+          <p>Learn MERN/MEAN stack. Contribute to open-source. Internships matter!</p></div>
+        </div>
+      `;
+    }
+    if (skills === "ml") {
+      suggestions = `
+        <div class="job-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/4712/4712035.png"/>
+          <div><h4>Machine Learning Engineer</h4>
+          <p>Focus on Python, TensorFlow, PyTorch, and projects. Explore AI/ML research.</p></div>
+        </div>
+      `;
+    }
+    if (skills === "data") {
+      suggestions = `
+        <div class="job-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/4149/4149670.png"/>
+          <div><h4>Data Analyst / Scientist</h4>
+          <p>Learn SQL, Python, Power BI, Tableau. Build projects on Kaggle.</p></div>
+        </div>
+      `;
+    }
+  }
+
+  if (branch === "ece" || branch === "eee") {
+    if (skills === "core") {
+      suggestions = `
+        <div class="job-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/3022/3022309.png"/>
+          <div><h4>VLSI / Embedded Engineer</h4>
+          <p>Focus on Embedded C, Verilog, IoT systems, and PCB design.</p></div>
+        </div>
+      `;
+    }
+    if (skills === "cloud") {
+      suggestions = `
+        <div class="job-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/4248/4248443.png"/>
+          <div><h4>Cloud/DevOps Engineer</h4>
+          <p>Learn AWS, Azure, Docker, Kubernetes, and CI/CD pipelines.</p></div>
+        </div>
+      `;
+    }
+  }
+
+  if (branch === "mech" || branch === "civil") {
+    suggestions = `
+      <div class="job-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/188/188314.png"/>
+        <div><h4>Core Engineering Roles</h4>
+        <p>Focus on AutoCAD, SolidWorks, Project Management, and GATE/PSUs.</p></div>
+      </div>
+    `;
+  }
+
+  // After B.Tech specific
+  if (stage === "after" && (branch === "cse" || branch === "it")) {
+    suggestions += `
+      <div class="job-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"/>
+        <div><h4>Higher Studies (M.Tech/MS)</h4>
+        <p>Pursue research or specializations abroad in AI, Cloud, or Cybersecurity.</p></div>
+      </div>
+    `;
+  }
+
+  resultDiv.innerHTML = `<h3>Suggested Career Paths:</h3>${suggestions}`;
+}
+
+
+  prevBtn.addEventListener('click', () => {
+    if (currentStep > 0) { currentStep--; updateFormSteps(); }
+  });
+
+  // Show careers when form is submitted
+document.getElementById("careerForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const course = document.getElementById("course").value;
+  const branch = document.getElementById("branch").value;
+  const skill = document.getElementById("skill").value;
+
+  const resultDiv = document.getElementById("careerResult");
+  resultDiv.innerHTML = "";
+
+  if (course && branch && skill && careerData[course][branch][skill]) {
+    resultDiv.innerHTML = `<h3>Suggested Career Paths</h3>`;
+    careerData[course][branch][skill].forEach(job => {
+      resultDiv.innerHTML += `
+        <div class="job-card">
+          <img src="${job.img}" alt="">
+          <div>
+            <h4>${job.title}</h4>
+            <p>${job.desc}</p>
+            <p><strong>Companies Hiring:</strong> ${job.companies.join(", ")}</p>
+          </div>
+        </div>
+      `;
+    });
+  } else {
+    resultDiv.innerHTML = `<p style="color:red;">Please select a valid course, branch, and skill.</p>`;
+  }
+});
+
+
+  function showResults() {
+    const branch = document.getElementById('branch').value;
+    const interest = document.getElementById('interest').value;
+    const skillLevel = parseInt(document.getElementById('skillLevel').value);
+
+    let suggestionText = `<p><strong>Languages:</strong> ${selectedLanguages.join(', ') || 'None selected'}</p>`;
+    suggestionText += `<p><strong>Branch:</strong> ${branch}</p>`;
+    suggestionText += `<p><strong>Interest:</strong> ${interest}</p>`;
+    suggestionText += `<p><strong>Skill Level:</strong> ${skillLevel}/5</p>`;
+
+    suggestionText += `<div class="job-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968866.png"/>
+        <div class="job-info">
+          <h4>Sample Role Suggestion</h4>
+          <p>Based on your inputs, career recommendations will appear here.</p>
+        </div>
+      </div>`;
+
+    resultDiv.style.display = 'block';
+    resultDiv.innerHTML = `<h3>Your Career Suggestions 🎯</h3>${suggestionText}`;
+    window.scrollTo({ top: resultDiv.offsetTop - 20, behavior: 'smooth' });
+  }
+
+  // Initialize the page
+  updateFormSteps();
+  updateSelectedLanguagesList();
+</script>
+
+</body>
+</html>
