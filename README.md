@@ -1,7 +1,5 @@
 📌 Project Overview
 CareerCompass is a sample career guidance web application designed to help users explore suitable career paths based on their interests and skills. This project serves as a prototype to demonstrate how a career recommendation system can be built using basic web technologies and a database.
-The application provides a simple and interactive interface for users and showcases frontend–backend integration.
-
 
 🛠️ Technologies Used
 
