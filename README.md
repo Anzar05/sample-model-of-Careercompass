@@ -1,2 +1,40 @@
-# sample-model-of-Careercompass
-CareerCompass is a sample project designed to help users explore and plan their career paths based on skills, interests, and goals. This repository demonstrates the core concept, basic workflow, and sample implementation of career guidance features such as career recommendations, skill mapping, and learning suggestions. 
+📌 Project Overview
+CareerCompass is a sample career guidance web application designed to help users explore suitable career paths based on their interests and skills. This project serves as a prototype to demonstrate how a career recommendation system can be built using basic web technologies and a database.
+The application provides a simple and interactive interface for users and showcases frontend–backend integration.
+
+
+🛠️ Technologies Used
+
+Frontend:
+HTML
+CSS
+JavaScript
+
+Backend & Database:
+PHP (via XAMPP)
+MySQL
+Development Tools:
+Visual Studio Code (VS Code)
+XAMPP Server
+
+⚙️ Features
+User-friendly web interface
+Career-related data storage using MySQL
+Dynamic interaction using JavaScript
+Backend connectivity using XAMPP (Apache & MySQL)
+Modular and easy-to-understand project structure
+
+🎯 Purpose of the Project
+Academic mini project / sample model
+Understanding frontend and backend integration
+Learning database connectivity using MySQL
+Demonstrating basic career guidance system logic
+
+📚 Future Enhancements
+User authentication (login & signup)
+Advanced career recommendation logic
+Admin panel for managing career data
+Responsive design for mobile devices
+
+👤 Author
+Sk Mahamood Anzar
